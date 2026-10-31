@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d13">
+  <meta name="description" content="Art Gallery Exhibition Management System - Manage artists, artwork records, gallery spaces, exhibitions, and catalogues.">
+
+  <title>Art Gallery | Exhibition Management System</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a class="logo" href="#home" aria-label="Art Gallery Management home">
+      <span class="logo-icon" aria-hidden="true">✦</span>
+      <span>ART GALLERY<small>EXHIBITION MANAGEMENT</small></span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-controls="navLinks"
+      aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a href="#home">Overview</a>
+      <a href="#management">Management Hub</a>
+      <a href="#catalogueView" data-jump-tab="catalogue">Catalogue</a>
+      <a href="#gallery">Artwork Collection</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a href="#management" class="nav-button">Manage Exhibitions ↗</a>
+  </header>
+
+  <main>
+    <!-- HERO & LIVE KPI OVERVIEW -->
+    <section class="hero" id="home">
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <p class="eyebrow">CURATION · INVENTORY · SPATIAL PLANNING</p>
+        <h1>Art Exhibition<br><span>Management.</span></h1>
+
+        <p class="hero-description">
+          A complete curatorial platform to manage artist profiles, catalog artwork records, configure gallery spaces, assign exhibits, and publish exhibition catalogues.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#management" class="gold-button">Open Management Console <span>↗</span></a>
+          <a href="#gallery" class="outline-button">Browse Live Collection</a>
+        </div>
+      </div>
+
+      <div class="hero-caption">GALLERY OS · CURATORIAL WORKSPACE</div>
+    </section>
+
+    <!-- KPI METRICS BAR -->
+    <section class="kpi-section" aria-label="Gallery System Metrics">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">Registered Artists</span>
+          <strong class="kpi-value" id="kpiArtists">0</strong>
+          <span class="kpi-sub">Active profiles in directory</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Artwork Records</span>
+          <strong class="kpi-value" id="kpiArtworks">0</strong>
+          <span class="kpi-sub">Cataloged in collection</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Active Exhibitions</span>
+          <strong class="kpi-value" id="kpiExhibitions">0</strong>
+          <span class="kpi-sub">Scheduled & running shows</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Gallery Spaces</span>
+          <strong class="kpi-value" id="kpiSpaces">0</strong>
+          <span class="kpi-sub" id="kpiAssignedSub">0 artworks placed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXHIBITION MANAGEMENT SYSTEM CONSOLE -->
+    <section class="section management-section" id="management">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">CURATORIAL CONTROL CENTER</p>
+          <h2>Exhibition Management <span>Workspace.</span></h2>
+          <p class="muted">Manage artists, artwork inventory, exhibitions, gallery rooms, placements, and catalogues.</p>
+        </div>
+
+        <button type="button" id="resetDataBtn" class="reset-button" title="Restore original default data">
+          ↺ Reset Demo Data
+        </button>
+      </div>
+
+      <!-- MODULE TABS -->
+      <div class="mgmt-tabs" id="mgmtTabs" role="tablist" aria-label="Management Modules">
+        <button class="mgmt-tab active" type="button" role="tab" aria-selected="true" data-tab="artists">
+          1. Artist Profiles
+        </button>
+        <button class="mgmt-tab" type="button" role="tab" aria-selected="false" data-tab="artworks">
+          2. Artwork Records
+        </button>
+        <button class="mgmt-tab" type="button" role="tab" aria-selected="false" data-tab="exhibitions">
+          3. Exhibition Creation
+        </button>
+        <button class="mgmt-tab" type="button" role="tab" aria-selected="false" data-tab="spaces">
+          4. Gallery Spaces
+        </button>
+        <button class="mgmt-tab" type="button" role="tab" aria-selected="false" data-tab="assignment">
+          5. Artwork Assignment
+        </button>
+        <button class="mgmt-tab" type="button" role="tab" aria-selected="false" data-tab="catalogue" id="catalogueView">
+          6. Exhibition Catalogue
+        </button>
+      </div>
+
+      <!-- TAB 1: ARTIST PROFILES -->
+      <div class="mgmt-panel active" id="panel-artists" role="tabpanel">
+        <div class="mgmt-layout">
+          <form class="mgmt-form" id="artistForm">
+            <h3>+ Add Artist Profile</h3>
+            <p class="muted">Register a new artist into the gallery directory.</p>
+
+            <label>
+              <span>Artist Full Name *</span>
+              <input type="text" id="artistName" placeholder="e.g., Amrita Sher-Gil" required>
+            </label>
+
+            <label>
+              <span>Specialization / Movement *</span>
+              <input type="text" id="artistSpecialty" placeholder="e.g., Contemporary Oil Painting" required>
+            </label>
+
+            <label>
+              <span>Country / Origin *</span>
+              <input type="text" id="artistCountry" placeholder="e.g., India" required>
+            </label>
+
+            <label>
+              <span>Contact / Portfolio Email</span>
+              <input type="email" id="artistEmail" placeholder="artist@gallery.org">
+            </label>
+
+            <label>
+              <span>Artist Biography *</span>
+              <textarea id="artistBio" rows="3" placeholder="Brief curatorial biography and artistic background..." required></textarea>
+            </label>
+
+            <button type="submit" class="gold-button full-btn">Save Artist Profile</button>
+          </form>
+
+          <div class="mgmt-content">
+            <div class="panel-header">
+              <h3>Registered Artist Directory</h3>
+              <span class="badge" id="artistCountBadge">0 Artists</span>
+            </div>
+            <div class="cards-grid" id="artistList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: ARTWORK RECORDS -->
+      <div class="mgmt-panel" id="panel-artworks" role="tabpanel" hidden>
+        <div class="mgmt-layout">
+          <form class="mgmt-form" id="artworkForm">
+            <h3>+ Add Artwork Record</h3>
+            <p class="muted">Log a new piece into the gallery inventory.</p>
+
+            <label>
+              <span>Artwork Title *</span>
+              <input type="text" id="artTitleInput" placeholder="e.g., Echoes of Dawn" required>
+            </label>
+
+            <label>
+              <span>Select Artist *</span>
+              <select id="artArtistSelect" required></select>
+            </label>
+
+            <div class="form-row">
+              <label>
+                <span>Category / Medium *</span>
+                <select id="artCategoryInput" required>
+                  <option value="Painting">Painting</option>
+                  <option value="Sculpture">Sculpture</option>
+                  <option value="Photography">Photography</option>
+                  <option value="Digital Art">Digital Art</option>
+                  <option value="Portrait">Portrait</option>
+                  <option value="Print">Print</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Year *</span>
+                <input type="text" id="artYearInput" placeholder="2026" required>
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label>
+                <span>Dimensions</span>
+                <input type="text" id="artDimensionsInput" placeholder="e.g., 120 × 90 cm">
+              </label>
+
+              <label>
+                <span>Valuation / Price *</span>
+                <input type="text" id="artPriceInput" placeholder="e.g., $4,500 or Enquire" required>
+              </label>
+            </div>
+
+            <label>
+              <span>Image URL *</span>
+              <input type="url" id="artImageInput" placeholder="https://images.unsplash.com/..." required>
+            </label>
+
+            <label>
+              <span>Curatorial Description *</span>
+              <textarea id="artDescInput" rows="3" placeholder="Describe medium, context, and visual narrative..." required></textarea>
+            </label>
+
+            <button type="submit" class="gold-button full-btn">Add to Inventory</button>
+          </form>
+
+          <div class="mgmt-content">
+            <div class="panel-header">
+              <h3>Master Artwork Inventory</h3>
+              <input type="search" id="inventorySearch" class="search-input" placeholder="Search title, artist, medium...">
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Artwork</th>
+                    <th>Artist</th>
+                    <th>Medium & Year</th>
+                    <th>Status / Placement</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="artworkTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: EXHIBITION CREATION -->
+      <div class="mgmt-panel" id="panel-exhibitions" role="tabpanel" hidden>
+        <div class="mgmt-layout">
+          <form class="mgmt-form" id="exhibitionForm">
+            <h3>+ Create Exhibition</h3>
+            <p class="muted">Launch a new curated show and schedule dates.</p>
+
+            <label>
+              <span>Exhibition Title *</span>
+              <input type="text" id="exTitleInput" placeholder="e.g., Modern Horizons 2026" required>
+            </label>
+
+            <label>
+              <span>Lead Curator *</span>
+              <input type="text" id="exCuratorInput" placeholder="e.g., Sheetal & Curatorial Team" required>
+            </label>
+
+            <div class="form-row">
+              <label>
+                <span>Start Date *</span>
+                <input type="date" id="exStartInput" required>
+              </label>
+
+              <label>
+                <span>End Date *</span>
+                <input type="date" id="exEndInput" required>
+              </label>
+            </div>
+
+            <label>
+              <span>Exhibition Status *</span>
+              <select id="exStatusInput" required>
+                <option value="Active">Active (Open to Public)</option>
+                <option value="Upcoming">Upcoming (Scheduled)</option>
+                <option value="Planning">Planning / Curation</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Theme & Curatorial Note *</span>
+              <textarea id="exThemeInput" rows="3" placeholder="Describe the exhibition concept and narrative..." required></textarea>
+            </label>
+
+            <button type="submit" class="gold-button full-btn">Create Exhibition</button>
+          </form>
+
+          <div class="mgmt-content">
+            <div class="panel-header">
+              <h3>Scheduled & Active Exhibitions</h3>
+              <span class="badge" id="exhibitionCountBadge">0 Shows</span>
+            </div>
+            <div class="cards-grid" id="exhibitionList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: GALLERY SPACES -->
+      <div class="mgmt-panel" id="panel-spaces" role="tabpanel" hidden>
+        <div class="mgmt-layout">
+          <form class="mgmt-form" id="spaceForm">
+            <h3>+ Add Gallery Space</h3>
+            <p class="muted">Configure physical halls or virtual rooms.</p>
+
+            <label>
+              <span>Space / Room Name *</span>
+              <input type="text" id="spaceNameInput" placeholder="e.g., East Wing Contemporary Hall" required>
+            </label>
+
+            <div class="form-row">
+              <label>
+                <span>Floor / Zone *</span>
+                <input type="text" id="spaceFloorInput" placeholder="e.g., Ground Floor · Zone A" required>
+              </label>
+
+              <label>
+                <span>Max Artwork Capacity *</span>
+                <input type="number" id="spaceCapacityInput" min="1" max="100" value="6" required>
+              </label>
+            </div>
+
+            <label>
+              <span>Lighting & Environment Type *</span>
+              <input type="text" id="spaceTypeInput" placeholder="e.g., Natural Skylight + Track Spotlights" required>
+            </label>
+
+            <button type="submit" class="gold-button full-btn">Create Gallery Space</button>
+          </form>
+
+          <div class="mgmt-content">
+            <div class="panel-header">
+              <h3>Gallery Floor Spaces & Capacity</h3>
+              <span class="badge" id="spaceCountBadge">0 Rooms</span>
+            </div>
+            <div class="cards-grid" id="spaceList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: ARTWORK ASSIGNMENT -->
+      <div class="mgmt-panel" id="panel-assignment" role="tabpanel" hidden>
+        <div class="mgmt-layout">
+          <form class="mgmt-form" id="assignmentForm">
+            <h3>⇄ Assign Artwork to Exhibition</h3>
+            <p class="muted">Link an inventory artwork to an active exhibition and gallery room.</p>
+
+            <label>
+              <span>1. Select Artwork *</span>
+              <select id="assignArtworkSelect" required></select>
+            </label>
+
+            <label>
+              <span>2. Assign to Exhibition *</span>
+              <select id="assignExhibitionSelect" required></select>
+            </label>
+
+            <label>
+              <span>3. Place in Gallery Space *</span>
+              <select id="assignSpaceSelect" required></select>
+            </label>
+
+            <button type="submit" class="gold-button full-btn">Assign Artwork Placement</button>
+          </form>
+
+          <div class="mgmt-content">
+            <div class="panel-header">
+              <h3>Current Spatial & Exhibition Assignments</h3>
+              <span class="muted">Manage where each piece is exhibited</span>
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Artwork</th>
+                    <th>Artist</th>
+                    <th>Assigned Exhibition</th>
+                    <th>Gallery Space</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="assignmentTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>git init
+      
+
+      <!-- TAB 6: EXHIBITION CATALOGUE -->
+      <div class="mgmt-panel" id="panel-catalogue" role="tabpanel" hidden>
+        <div class="catalogue-controls">
+          <div>
+            <h3>Official Exhibition Catalogue</h3>
+            <p class="muted">Filter by exhibition to view curated artworks, artist notes, and room locations.</p>
+          </div>
+
+          <div class="catalogue-actions">
+            <select id="catalogueFilterSelect" aria-label="Select Exhibition for Catalogue"></select>
+            <button type="button" id="printCatalogueBtn" class="outline-button">🖨 Print / Export Catalogue</button>
+          </div>
+        </div>
+
+        <div id="catalogueHeaderBanner" class="catalogue-banner"></div>
+        <div class="catalogue-grid" id="catalogueGrid"></div>
+      </div>
+    </section>
+
+    <!-- VISUAL GALLERY COLLECTION -->
+    <section class="gallery-section section" id="gallery">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LIVE COLLECTION PREVIEW</p>
+          <h2>Cataloged Exhibits<span>.</span></h2>
+          <p class="muted">Click any artwork card to inspect curatorial details, room placement, or make an enquiry.</p>
+        </div>
+
+        <div class="filters" id="filters" aria-label="Filter artwork">
+          <button class="filter active" type="button" data-filter="All" aria-pressed="true">All</button>
+          <button class="filter" type="button" data-filter="Painting" aria-pressed="false">Paintings</button>
+          <button class="filter" type="button" data-filter="Sculpture" aria-pressed="false">Sculptures</button>
+          <button class="filter" type="button" data-filter="Photography" aria-pressed="false">Photography</button>
+          <button class="filter" type="button" data-filter="Digital Art" aria-pressed="false">Digital Art</button>
+          <button class="filter" type="button" data-filter="Portrait" aria-pressed="false">Portraits</button>
+          <button class="filter" type="button" data-filter="Print" aria-pressed="false">Prints</button>
+        </div>
+      </div>
+
+      <p class="gallery-status" id="galleryStatus" aria-live="polite"></p>
+      <div class="art-grid" id="artGrid"></div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="section team-section" id="team">
+      <p class="eyebrow">THE PEOPLE BEHIND THE PROJECT</p>
+      <h2>Meet Our <span>Team.</span></h2>
+
+      <p class="muted">
+        Five creative minds working together to build this art gallery exhibition management platform.
+      </p>
+
+      <div class="team-container">
+        <div class="team-person">
+          <div class="team-avatar">S</div>
+          <h3>Sheetal</h3>
+          <p class="team-role">Leader</p>
+        </div>
+
+        <div class="team-person">
+          <div class="team-avatar">S</div>
+          <h3>Srijal</h3>
+          <p>Member</p>
+        </div>
+
+        <div class="team-person">
+          <div class="team-avatar">A</div>
+          <h3>Ayush</h3>
+          <p>Member</p>
+        </div>
+
+        <div class="team-person">
+          <div class="team-avatar">S</div>
+          <h3>Sneha</h3>
+          <p>Member</p>
+        </div>
+
+        <div class="team-person">
+          <div class="team-avatar">R</div>
+          <h3>Riddhi</h3>
+          <p>Member</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="footer-main">
+      <div>
+        <a class="logo" href="#home">
+          <span class="logo-icon" aria-hidden="true">✦</span>
+          <span>ART GALLERY<small>EXHIBITION MANAGEMENT</small></span>
+        </a>
+        <p class="muted footer-tagline">Curatorial software for artist, inventory, and spatial exhibition management.</p>
+      </div>
+
+      <div class="contact-info">
+        <h3>Curatorial Office</h3>
+        <p>ayushkatoch990@gmail.com</p>
+        <p>Open daily · 10 AM – 7 PM</p>
+      </div>
+    </div>
+
+    <p class="copyright">© 2026 Art Gallery Exhibition Management System. Created for curators & art lovers.</p>
+  </footer>
+
+  <!-- ARTWORK DETAIL MODAL -->
+  <dialog class="art-dialog" id="artDialog" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Close artwork details">×</button>
+
+    <div class="modal-content">
+      <div class="modal-image-wrap">
+        <img id="modalImage" src="" alt="">
+      </div>
+
+      <div class="modal-info">
+        <p class="eyebrow" id="modalCategory"></p>
+        <h2 id="modalTitle"></h2>
+        <p class="modal-artist" id="modalArtist"></p>
+
+        <div class="modal-meta-box">
+          <p><strong>Exhibition:</strong> <span id="modalExhibition"></span></p>
+          <p><strong>Gallery Space:</strong> <span id="modalSpace"></span></p>
+          <p><strong>Dimensions:</strong> <span id="modalDimensions"></span></p>
+        </div>
+
+        <p id="modalDescription"></p>
+        <p class="price" id="modalPrice"></p>
+        <a class="gold-button" id="enquireButton" href="#contact">Enquire About Artwork ↗</a>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ARTWORK ENQUIRY MODAL -->
+  <div id="enquiryModal" class="enquiry-modal">
+    <div class="enquiry-box">
+      <button id="closeEnquiry" type="button">✕</button>
+
+      <h2>Enquire About Artwork</h2>
+
+      <form id="enquiryForm">
+        <input
+          type="text"
+          id="artworkTitle"
+          placeholder="Artwork title"
+          readonly
+          required
+        >
+
+        <input
+          type="text"
+          id="visitorName"
+          placeholder="Your name"
+          required
+        >
+
+        <input
+          type="email"
+          id="visitorEmail"
+          placeholder="Your email"
+          required
+        >
+
+        <textarea
+          id="visitorMessage"
+          placeholder="Your enquiry"
+          required
+        ></textarea>
+
+        <button type="submit">Send Enquiry</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
